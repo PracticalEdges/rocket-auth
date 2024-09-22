@@ -1,6 +1,4 @@
-extern crate rocket;
-
-use rocket::{get, routes, launch};
+#[macro_use] extern crate rocket;
 
 #[get("/<name>/<age>")]
 fn hello(name: &str, age: u8) -> String {

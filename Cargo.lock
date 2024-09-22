@@ -899,8 +899,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "rocket_auth"
-version = "0.0.0"
+name = "rocket-auth"
+version = "0.1.0"
 dependencies = [
  "rocket",
 ]
