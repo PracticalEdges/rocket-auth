@@ -1,0 +1,18 @@
+[default]
+address = "0.0.0.0"
+limits = { form = "128 kB", json = "2 MiB" }
+secret_key = "7046f4648305b2c2615d45c79dc6644c1b3afa2850e8ac360c8c2a731c9f4df67aab155ffd2a89b8423ca5c82cae1a52a338dc097916b4ccbe65d53ecaf6417a25c8c96578ee4a7ddf537290dcf0641da0673cc1685beb15c0cff764d4720c70ebbaa9b4bb3424dbb743dd559dc9b1e24ca2ec705b156abeb73451aea778fd50
+"
+workers = 16
+max_blocking = 512
+keep_alive = 5
+cli_colors = true
+
+[debug]
+port = 8888
+
+[nyc]
+port = 8001
+
+[release]
+port = 9999
