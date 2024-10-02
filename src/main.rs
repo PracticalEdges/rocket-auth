@@ -1,5 +1,6 @@
-#[macro_use]
-extern crate rocket;
+mod utils;
+use crate::utils::connect_sql::establish_connection;
+use rocket::{get, routes, launch};
 
 #[get("/")]
 fn hello() -> String {
@@ -8,5 +9,6 @@ fn hello() -> String {
 
 #[launch]
 fn rocket() -> _ {
+    establish_connection();
     rocket::build().mount("/", routes![hello])
 }
