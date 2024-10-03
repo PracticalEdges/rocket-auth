@@ -1,0 +1,61 @@
+CREATE TABLE access_token (
+    id CHAR(36) PRIMARY KEY,
+    client_id CHAR(36) NOT NULL,
+    user_id CHAR(36) NOT NULL,
+    token TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (client_id) REFERENCES client(id)
+);
+
+
+CREATE TABLE refresh_token (
+    id CHAR(36) PRIMARY KEY,
+    client_id CHAR(36) NOT NULL,
+    user_id CHAR(36) NOT NULL,
+    token TEXT NOT NULL,
+    expires_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (client_id) REFERENCES client(id)
+);
+
+CREATE TABLE tenant (
+    id CHAR(36) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE user (
+    id CHAR(36) PRIMARY KEY,
+    tenant_id CHAR(36) NOT NULL,
+    user_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (tenant_id) REFERENCES tenant(id)
+);
+
+CREATE TABLE authorization_code (
+  id CHAR(36) PRIMARY KEY,
+  client_id CHAR(36) NOT NULL,
+  user_id CHAR(36) NOT NULL,
+  code TEXT NOT NULL,
+  redirect_uri TEXT NOT NULL,
+  expires_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES user(id),
+  FOREIGN KEY (client_id) REFERENCES client(id)
+);
+
+CREATE TABLE client (
+    id CHAR(36) PRIMARY KEY,
+    tenant_id CHAR(36) NOT NULL,
+    client_id VARCHAR(255) NOT NULL,
+    client_secret VARCHAR(255) NOT NULL,
+    redirect_uri VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (tenant_id) REFERENCES tenant(id),
+    FOREIGN KEY (client_id) REFERENCES client(id)
+)
