@@ -1,0 +1,3 @@
+{
+	"cmake.sourceDirectory": "${workspaceFolder}/Applications/Autodesk/maya2024/plug-ins/xgen/devkit/xgenExternalAPI"
+}

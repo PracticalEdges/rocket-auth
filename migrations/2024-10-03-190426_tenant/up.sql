@@ -1,0 +1,7 @@
+-- Your SQL goes here
+
+CREATE TABLE tenant (
+    id CHAR(36) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
