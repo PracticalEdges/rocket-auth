@@ -8,7 +8,7 @@ fn hello() -> String {
 }
 
 #[launch]
-fn rocket() -> _ {
-    establish_connection();
+async fn rocket() -> _ {
+    establish_connection().await;
     rocket::build().mount("/", routes![hello])
 }
