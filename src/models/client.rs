@@ -1,25 +1,23 @@
 use diesel::prelude::*;
-use crate::schema::user;
+use crate::schema::client;
 use crate::schema::tenant::dsl::tenant;
 
 #[derive(Queryable, Identifiable, Associations, Debug)]
 #[belongs_to(tenant)]
-#[table_name="user"]
-pub struct User {
+#[table_name="client"]
+pub struct Client {
     pub id: String,
     pub tenant_id: String,
-    pub user_name: String,
-    pub email: String,
-    pub password: String,
+    pub client_secret: String,
+    pub redirect_uri: String,
     pub created_at: chrono::NaiveDateTime,
 }
 
 #[derive(Insertable)]
-#[table_name="user"]
-pub struct NewUser<'a> {
+#[table_name="client"]
+pub struct NewClient<'a> {
     pub id: &'a str,
     pub tenant_id: &'a str,
-    pub user_name: &'a str,
-    pub email: &'a str,
-    pub password: &'a str
+    pub client_secret: &'a str,
+    pub redirect_uri: &'a str,
 }

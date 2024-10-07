@@ -1,4 +1,7 @@
 mod utils;
+mod models;
+mod schema;
+
 use crate::utils::connect_sql::establish_connection;
 use rocket::{get, routes, launch};
 
@@ -8,7 +11,7 @@ fn hello() -> String {
 }
 
 #[launch]
-fn rocket() -> _ {
-    establish_connection();
+async fn rocket() -> _ {
+    establish_connection().await;
     rocket::build().mount("/", routes![hello])
 }
