@@ -1,5 +1,7 @@
 mod utils;
 mod models;
+mod schema;
+
 use crate::utils::connect_sql::establish_connection;
 use rocket::{get, routes, launch};
 
