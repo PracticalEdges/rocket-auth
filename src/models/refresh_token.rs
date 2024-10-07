@@ -1,14 +1,16 @@
-use crate::schema::{client, refresh_token, user};
+use crate::schema::user::dsl::user;
+use crate::schema::client::dsl::client;
 use diesel::prelude::*;
-use diesel::sql_types::{Char, Text, Timestamp};
+use crate::schema::refresh_token;
 
-#[derive(Queryable, Associations, Identifiable)]
-#[belongs_to(User)]
-#[belongs_to(Client)]
+#[derive(Queryable, Associations, Identifiable, Debug)]
+#[belongs_to(user)]
+#[belongs_to(client)]
 #[table_name = "refresh_token"]
 pub struct RefreshToken {
     pub id: String,
     pub user_id: String,
+    pub client_id: String,
     pub token: String,
     pub expires_at: chrono::NaiveDateTime,
     pub created_at: chrono::NaiveDateTime,
@@ -19,7 +21,6 @@ pub struct RefreshToken {
 pub struct NewRefreshToken<'a> {
     pub id: &'a str,
     pub user_id: &'a str,
-    pub token: &'a str,
-    pub expires_at: chrono::NaiveDateTime,
-    pub created_at: chrono::NaiveDateTime,
+    pub client_id: &'a str,
+    pub token: &'a str
 }

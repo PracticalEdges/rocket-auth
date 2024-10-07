@@ -1,10 +1,11 @@
 use diesel::prelude::*;
-use diesel::sql_types::{Char, Text, Timestamp};
 use crate::schema::access_token;
+use crate::schema::client::dsl::client;
+use crate::schema::user::dsl::user;
 
 #[derive(Queryable, Associations, Identifiable)]
-#[belongs_to(User)]
-#[belongs_to(Client)]
+#[belongs_to(user)]
+#[belongs_to(client)]
 #[table_name="access_token"]
 pub struct AccessToken {
     pub id: String,
@@ -12,7 +13,6 @@ pub struct AccessToken {
     pub user_id: String,
     pub token: String,
     pub created_at: chrono::NaiveDateTime,
-    pub updated_at: chrono::NaiveDateTime,
 }
 
 #[derive(Insertable)]
@@ -22,6 +22,4 @@ pub struct NewAccessToken<'a> {
     pub client_id: &'a str,
     pub user_id: &'a str,
     pub token: &'a str,
-    pub created_at: chrono::NaiveDateTime,
-    pub updated_at: chrono::NaiveDateTime,
 }

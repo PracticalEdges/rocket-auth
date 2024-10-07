@@ -13,3 +13,6 @@ export MYSQLCLIENT_LIB_DIR=/usr/lib/x86_64-linux-gnu
 export MYSQLCLIENT_VERSION=10.5.9  # Replace with your installed version
 ```
 
+## Generate migrations
+
+

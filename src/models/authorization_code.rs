@@ -1,16 +1,15 @@
 use diesel::prelude::*;
-use diesel::sql_types::{Char, Text, Timestamp};
-use crate::schema::{authorization_code, user, client};
+use crate::schema::authorization_code;
+use crate::schema::client::dsl::client;
 
-#[derive(Queryable, Identifiable, Associations)]
-#[belongs_to[Tenant]]
+#[derive(Queryable, Identifiable, Associations, Debug)]
+#[belongs_to(client)]
 #[table_name="authorization_code"]
 pub struct AuthorizationCode {
     pub id: String,
     pub client_id: String,
     pub user_id: String,
     pub code: String,
-    pub redirect_uri: String,
     pub expires_at: chrono::NaiveDateTime,
     pub created_at: chrono::NaiveDateTime,
 }
@@ -21,8 +20,5 @@ pub struct NewAuthorizationCode<'a> {
     pub id: &'a str,
     pub client_id: &'a str,
     pub user_id: &'a str,
-    pub code: &'a str,
-    pub redirect_uri: &'a str,
-    pub expires_at: chrono::NaiveDateTime,
-    pub created_at: chrono::NaiveDateTime,
+    pub code: &'a str
 }

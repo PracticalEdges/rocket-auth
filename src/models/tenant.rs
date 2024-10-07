@@ -1,8 +1,7 @@
 use diesel::prelude::*;
-use diesel::sql_types::{Char, Text, Timestamp};
 use crate::schema::tenant;
 
-#[derive(Queryable, Indentifiable, Associations)]
+#[derive(Queryable, Identifiable, Debug)]
 #[table_name="tenant"]
 pub struct Tenant {
     pub id: String,
@@ -15,5 +14,4 @@ pub struct Tenant {
 pub struct NewTenant<'a> {
     pub id: &'a str,
     pub name: &'a str,
-    pub created_at: chrono::NaiveDateTime,
 }

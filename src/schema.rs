@@ -46,6 +46,20 @@ diesel::table! {
 }
 
 diesel::table! {
+    refresh_token (id) {
+        #[max_length = 36]
+        id -> Char,
+        #[max_length = 36]
+        client_id -> Char,
+        #[max_length = 36]
+        user_id -> Char,
+        token -> Text,
+        expires_at -> Timestamp,
+        created_at -> Timestamp,
+    }
+}
+
+diesel::table! {
     tenant (id) {
         #[max_length = 36]
         id -> Char,
@@ -76,12 +90,15 @@ diesel::joinable!(access_token -> user (user_id));
 diesel::joinable!(authorization_code -> client (client_id));
 diesel::joinable!(authorization_code -> user (user_id));
 diesel::joinable!(client -> tenant (tenant_id));
+diesel::joinable!(refresh_token -> client (client_id));
+diesel::joinable!(refresh_token -> user (user_id));
 diesel::joinable!(user -> tenant (tenant_id));
 
 diesel::allow_tables_to_appear_in_same_query!(
     access_token,
     authorization_code,
     client,
+    refresh_token,
     tenant,
     user,
 );
