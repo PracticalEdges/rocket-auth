@@ -4,13 +4,25 @@ use rocket::serde::json::Json;
 use crate::schema::tenant::dsl::tenant;
 use diesel_async::RunQueryDsl;
 
-#[post("/createTenant", data = "<new_tenant>")]
-pub async fn create_tenant(new_tenant: Json<NewTenant<'_>>) -> String {
-    let mut connection = establish_connection().await;
+#[derive(serde::Deserialize)]
+pub struct NewTenantCreate<'a> {
+    name: &'a str,
+}
+
+#[post("/createTenant", data = "<new_tenant_create>")]
+pub async fn create_tenant(new_tenant_create: Json<NewTenantCreate<'_>>) -> String {
+    // TODO: find a better algorithm for hashing
+    let new_tenant = NewTenant {
+        id: "1",
+        name: new_tenant_create.name,
+    };
+
     diesel::insert_into(tenant)
-        .values(new_tenant.into_inner())
-        .execute(&mut connection)
+        .values(new_tenant)
+        .execute(&mut establish_connection().await)
         .await
         .expect("Error saving new tenant");
+
+
     format!("Tenant created!")
 }
