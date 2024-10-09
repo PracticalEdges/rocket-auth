@@ -1555,8 +1555,10 @@ dependencies = [
  "diesel",
  "diesel-async",
  "dotenvy",
+ "rand",
  "rocket",
  "serde",
+ "sha2",
  "tokio",
 ]
 
