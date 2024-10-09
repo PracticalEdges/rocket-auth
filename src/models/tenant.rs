@@ -1,9 +1,9 @@
-use diesel::prelude::*;
 use crate::schema::tenant;
+use diesel::prelude::*;
 use rocket::serde::Deserialize;
 
-#[derive(Queryable, Identifiable, Debug)]
-#[table_name="tenant"]
+#[derive(Queryable, Identifiable, Debug, Selectable)]
+#[diesel(table_name = tenant)]
 pub struct Tenant {
     pub id: String,
     pub name: String,
@@ -11,7 +11,7 @@ pub struct Tenant {
 }
 
 #[derive(Insertable, Debug, Deserialize)]
-#[table_name="tenant"]
+#[diesel(table_name = tenant)]
 pub struct NewTenant<'a> {
     pub id: &'a str,
     pub name: &'a str,

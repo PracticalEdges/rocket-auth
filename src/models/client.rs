@@ -4,8 +4,8 @@ use crate::schema::tenant::dsl::tenant;
 use rocket::serde::Deserialize;
 
 #[derive(Queryable, Identifiable, Associations, Debug)]
-#[belongs_to(tenant)]
-#[table_name="client"]
+#[diesel(belongs_to(tenant))]
+#[diesel(table_name = client)]
 pub struct Client {
     pub id: String,
     pub tenant_id: String,
@@ -15,7 +15,7 @@ pub struct Client {
 }
 
 #[derive(Insertable, Debug, Deserialize)]
-#[table_name="client"]
+#[diesel(table_name = client)]
 pub struct NewClient<'a> {
     pub id: &'a str,
     pub tenant_id: &'a str,

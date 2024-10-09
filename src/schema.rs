@@ -9,8 +9,8 @@ diesel::table! {
         #[max_length = 36]
         user_id -> Char,
         token -> Text,
-        expires_at -> Timestamp,
         created_at -> Timestamp,
+        updated_at -> Timestamp,
     }
 }
 
@@ -23,6 +23,7 @@ diesel::table! {
         #[max_length = 36]
         user_id -> Char,
         code -> Text,
+        redirect_uri -> Text,
         expires_at -> Timestamp,
         created_at -> Timestamp,
     }
@@ -34,6 +35,8 @@ diesel::table! {
         id -> Char,
         #[max_length = 36]
         tenant_id -> Char,
+        #[max_length = 255]
+        client_id -> Varchar,
         #[max_length = 255]
         client_secret -> Varchar,
         #[max_length = 255]

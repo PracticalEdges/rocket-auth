@@ -6,7 +6,7 @@ use crate::schema::user::dsl::user;
 #[derive(Queryable, Associations, Identifiable)]
 #[belongs_to(user)]
 #[belongs_to(client)]
-#[table_name="access_token"]
+#[diesel(table_name=access_token)]
 pub struct AccessToken {
     pub id: String,
     pub client_id: String,
@@ -16,7 +16,7 @@ pub struct AccessToken {
 }
 
 #[derive(Insertable)]
-#[table_name="access_token"]
+#[diesel(table_name=access_token)]
 pub struct NewAccessToken<'a> {
     pub id: &'a str,
     pub client_id: &'a str,
