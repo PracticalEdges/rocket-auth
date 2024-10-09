@@ -3,6 +3,8 @@ use crate::{models::tenant::NewTenant, utils::connect_sql::establish_connection}
 use rocket::serde::json::Json;
 use crate::schema::tenant::dsl::tenant;
 use diesel_async::RunQueryDsl;
+use crate::utils::generate_random_hash::generate_random_hash_function;
+use std::env;
 
 #[derive(serde::Deserialize)]
 pub struct NewTenantCreate<'a> {
@@ -11,9 +13,13 @@ pub struct NewTenantCreate<'a> {
 
 #[post("/createTenant", data = "<new_tenant_create>")]
 pub async fn create_tenant(new_tenant_create: Json<NewTenantCreate<'_>>) -> String {
-    // TODO: find a better algorithm for hashing
+
+    let size = env::var("SIZE_LEN_LIMIT_STR").expect("Size must be set");
+
+    let rand_hash = generate_random_hash_function(size.parse().unwrap());
+
     let new_tenant = NewTenant {
-        id: "1",
+        id: rand_hash.as_str(),
         name: new_tenant_create.name,
     };
 
@@ -22,7 +28,6 @@ pub async fn create_tenant(new_tenant_create: Json<NewTenantCreate<'_>>) -> Stri
         .execute(&mut establish_connection().await)
         .await
         .expect("Error saving new tenant");
-
 
     format!("Tenant created!")
 }
