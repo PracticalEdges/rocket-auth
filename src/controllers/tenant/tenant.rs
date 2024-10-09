@@ -6,6 +6,7 @@ use diesel_async::RunQueryDsl;
 
 #[post("/createTenant", data = "<new_tenant>")]
 pub async fn create_tenant(new_tenant: Json<NewTenant<'_>>) -> String {
+    println!("{:?}", new_tenant);
     let mut connection = establish_connection().await;
     diesel::insert_into(tenant)
         .values(new_tenant.into_inner())

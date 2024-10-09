@@ -1,6 +1,7 @@
 use diesel::prelude::*;
 use crate::schema::client;
 use crate::schema::tenant::dsl::tenant;
+use rocket::serde::Deserialize;
 
 #[derive(Queryable, Identifiable, Associations, Debug)]
 #[belongs_to(tenant)]
@@ -13,7 +14,7 @@ pub struct Client {
     pub created_at: chrono::NaiveDateTime,
 }
 
-#[derive(Insertable)]
+#[derive(Insertable, Debug, Deserialize)]
 #[table_name="client"]
 pub struct NewClient<'a> {
     pub id: &'a str,
