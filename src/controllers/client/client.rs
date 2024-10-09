@@ -7,6 +7,7 @@ use crate::{
 };
 use diesel_async::RunQueryDsl;
 use crate::schema::tenant::dsl::{tenant, id}; 
+use crate::schema::client::dsl::client; 
 
 #[post("/createClient", data = "<new_client>")]
 pub async fn create_client(new_client: Json<NewClient<'_>>) -> Result<String, String> {
@@ -18,7 +19,14 @@ pub async fn create_client(new_client: Json<NewClient<'_>>) -> Result<String, St
         .await;
 
     match tenant_exists {
-        Ok(_) => return Ok("Tenant exists".to_string()),
+        Ok(_) => {
+            diesel::insert_into(client)
+                .values(&*new_client)
+                .execute(connection)
+                .await
+                .expect("Error saving new client");
+            return Ok("New Client Created".to_string());
+        },
         Err(e) => return Err(format!("Error: Tenant does not exist: {}", e)),
     }
 }
