@@ -45,8 +45,6 @@ pub async fn create_tenant(new_tenant_create: Json<NewTenantCreate<'_>>) -> Json
 
     let key: String = env::var("ENCRYPTION_KEY").expect("Key must be set");
 
-    println!("Key: {}", key);
-
     let encrypted_text: String = encrypt(rand_hash.as_str(), key.as_str(), 16);
 
     Json(CreateTenantResponse {
