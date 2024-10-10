@@ -3,8 +3,8 @@ use crate::schema::user;
 use crate::schema::tenant::dsl::tenant;
 
 #[derive(Queryable, Identifiable, Associations, Debug)]
-#[belongs_to(tenant)]
-#[table_name="user"]
+#[diesel(belongs_to(tenant))]
+#[diesel(table_name=user)]
 pub struct User {
     pub id: String,
     pub tenant_id: String,
@@ -15,7 +15,7 @@ pub struct User {
 }
 
 #[derive(Insertable)]
-#[table_name="user"]
+#[diesel(table_name=user)]
 pub struct NewUser<'a> {
     pub id: &'a str,
     pub tenant_id: &'a str,

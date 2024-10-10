@@ -4,9 +4,9 @@ use diesel::prelude::*;
 use crate::schema::refresh_token;
 
 #[derive(Queryable, Associations, Identifiable, Debug)]
-#[belongs_to(user)]
-#[belongs_to(client)]
-#[table_name = "refresh_token"]
+#[diesel(belongs_to(user))]
+#[diesel(belongs_to(client))]
+#[diesel(table_name = refresh_token)]
 pub struct RefreshToken {
     pub id: String,
     pub user_id: String,

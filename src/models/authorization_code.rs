@@ -3,8 +3,8 @@ use crate::schema::authorization_code;
 use crate::schema::client::dsl::client;
 
 #[derive(Queryable, Identifiable, Associations, Debug)]
-#[belongs_to(client)]
-#[table_name="authorization_code"]
+#[diesel(belongs_to(client))]
+#[diesel(table_name=authorization_code)]
 pub struct AuthorizationCode {
     pub id: String,
     pub client_id: String,
@@ -15,7 +15,7 @@ pub struct AuthorizationCode {
 }
 
 #[derive(Insertable)]
-#[table_name="authorization_code"]
+#[diesel(table_name=authorization_code)]
 pub struct NewAuthorizationCode<'a> {
     pub id: &'a str,
     pub client_id: &'a str,
