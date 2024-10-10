@@ -4,9 +4,16 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-rocket = "0.5.1"
+rocket = { version = "0.5.1", features = ["json"] }
+serde = { version = "1.0", features = ["derive"] }
 diesel = { version = "2.2.0", features = ["mysql", "r2d2"] }
 dotenvy = "0.15"
 diesel-async = { version = "0.5.0", features = ["mysql", "tokio"] }
 tokio = { version = "1.0", features = ["full"] }
 chrono = "0.4.38"
+rand = "0.8"
+sha2 = "0.10"
+aes = "0.7"
+block-modes = "0.8"
+block-padding = "0.2"
+hex = "0.4"
