@@ -34,7 +34,7 @@ pub async fn create_tenant(new_tenant_create: Json<NewTenantCreate<'_>>) -> Json
         name: new_tenant_create.name,
     };
 
-    let _ = diesel::insert_into(tenant)
+    let insert_result = diesel::insert_into(tenant)
         .values(new_tenant)
         .execute(&mut establish_connection().await)
         .await
@@ -43,9 +43,20 @@ pub async fn create_tenant(new_tenant_create: Json<NewTenantCreate<'_>>) -> Json
             "Error saving new tenant".to_string()
         });
 
-    let key: String = env::var("ENCRYPTION_KEY").expect("Key must be set");
+    match insert_result {
+        Ok(_) => (),
+        Err(e) => return Json(CreateTenantResponse {
+            action: e,
+            tenant_key: "".to_string(),
+        }),
+    }
 
-    let encrypted_text: String = encrypt(rand_hash.as_str(), key.as_str(), 16);
+    let key: Result<String, String> = env::var("ENCRYPTION_KEY").map_err(|e| {
+        error!("Error: {}", e);
+        "Encryption key must be set".to_string()
+    });
+
+    let encrypted_text: String = encrypt(rand_hash.as_str(), key.unwrap().as_str(), 16);
 
     Json(CreateTenantResponse {
         action: "Created Tenant successfully!".to_string(),

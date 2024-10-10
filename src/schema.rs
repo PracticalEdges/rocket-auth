@@ -35,6 +35,8 @@ diesel::table! {
         #[max_length = 36]
         tenant_id -> Char,
         #[max_length = 255]
+        name -> Varchar,
+        #[max_length = 255]
         client_secret -> Varchar,
         #[max_length = 255]
         redirect_uri -> Varchar,
