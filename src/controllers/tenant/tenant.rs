@@ -16,7 +16,7 @@ pub struct NewTenantCreate<'a> {
 #[derive(serde::Serialize)]
 pub struct CreateTenantResponse {
     action: String,
-    encrypted_text: String,
+    tenant_key: String,
 }
 
 #[post("/createTenant", data = "<new_tenant_create>")]
@@ -51,6 +51,6 @@ pub async fn create_tenant(new_tenant_create: Json<NewTenantCreate<'_>>) -> Json
 
     Json(CreateTenantResponse {
         action: "Created Tenant successfully!".to_string(),
-        encrypted_text,
+        tenant_key: encrypted_text,
     })
 }
